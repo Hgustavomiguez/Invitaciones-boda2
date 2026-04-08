@@ -3,149 +3,473 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nuestra Boda | 14.11.2026</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&family=Montserrat:wght@700&display=swap" rel="stylesheet">
+    <title>Invitación de Boda | A & B</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
         :root {
-            --blanco-papel: #F9F9F9;
-            --azul-electrico: #0046FF; /* Color de acento vibrante [cite: 10] */
-            --negro-carbon: #1A1A1A;
-            --gris-pliegue: #E0E0E0;
+            --bg-color: #F9F9F9;
+            --accent-color: #0046FF;
+            --text-color: #1A1A1A;
+            --text-light: #666666;
+            --font-main: 'Poppins', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
         body {
-            margin: 0;
-            font-family: 'Poppins', sans-serif;
-            background-color: var(--blanco-papel);
-            color: var(--negro-carbon);
-            text-align: center;
-            overflow-x: hidden;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: var(--font-main);
+            -webkit-font-smoothing: antialiased;
+            display: flex;
+            justify-content: center;
         }
 
-        /* Estilo Papiroflexia (Origami) */
-        .seccion {
-            padding: 50px 20px;
-            margin: 20px auto;
-            max-width: 500px;
-            background: white;
-            box-shadow: 10px 10px 0px var(--gris-pliegue); /* Efecto de pliegue geométrico */
-            border: 1px solid #eee;
-            position: relative;
-        }
-
-        .foto-principal {
+        /* Mobile-First Container */
+        .app-container {
             width: 100%;
-            height: 400px;
-            background: #ccc url('URL_DE_TU_FOTO_AQUÍ') center/cover;
-            clip-path: polygon(0% 0%, 100% 0%, 100% 90%, 50% 100%, 0% 90%); /* Corte estilo diamante/origami */
+            max-width: 480px;
+            background-color: var(--bg-color);
+            min-height: 100vh;
+            box-shadow: 0 0 20px rgba(0,0,0,0.05);
+            overflow-x: hidden;
+            padding-bottom: 4rem;
         }
 
-        h1 { font-family: 'Montserrat', sans-serif; text-transform: uppercase; letter-spacing: 3px; }
+        /* Typography */
+        h1, h2, h3 { font-weight: 300; }
+        .text-accent { color: var(--accent-color); }
+        .text-center { text-align: center; }
+        .mb-1 { margin-bottom: 0.5rem; }
+        .mb-2 { margin-bottom: 1rem; }
+        .mb-3 { margin-bottom: 1.5rem; }
+        .mb-4 { margin-bottom: 2rem; }
+        
+        /* Origami Card Style */
+        .origami-card {
+            background: #ffffff;
+            position: relative;
+            padding: 2rem;
+            margin: 0 1.5rem 2rem 1.5rem;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.04), -1px -1px 4px rgba(0, 0, 0, 0.02);
+            border: 1px solid rgba(0, 0, 0, 0.03);
+        }
 
-        .btn {
-            display: inline-block;
-            padding: 15px 30px;
-            background-color: var(--azul-electrico);
-            color: white;
-            text-decoration: none;
-            border-radius: 0px; /* Bordes rectos para minimalismo */
-            margin-top: 10px;
+        .origami-fold {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 0;
+            height: 0;
+            border-top: 30px solid var(--bg-color);
+            border-left: 30px solid #f0f0f0;
+            box-shadow: -2px 2px 3px rgba(0,0,0,0.03);
+            z-index: 10;
+        }
+
+        /* Fade-in Animation */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* 1. Cover */
+        .hero {
+            position: relative;
+            height: 70vh;
+            background: #ddd;
+            margin-bottom: 3rem;
+        }
+        .hero img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .hero-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 3rem 2rem;
+            background: linear-gradient(to top, var(--bg-color) 10%, rgba(249,249,249,0.8) 50%, transparent);
+            text-align: center;
+        }
+        .hero-title {
+            font-size: 3.5rem;
+            letter-spacing: 0.2em;
+            margin-bottom: 0.5rem;
+        }
+        .hero-date {
+            font-size: 0.85rem;
+            letter-spacing: 0.3em;
+            color: var(--accent-color);
             font-weight: 600;
-            transition: 0.3s;
+            text-transform: uppercase;
         }
 
-        .galeria {
+        /* 2. Countdown */
+        .countdown-grid {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            text-align: center;
+        }
+        .countdown-item {
+            display: flex;
+            flex-direction: column;
+        }
+        .countdown-value {
+            font-size: 2.5rem;
+            font-weight: 300;
+            color: var(--accent-color);
+            line-height: 1;
+        }
+        .countdown-label {
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-light);
+            margin-top: 0.5rem;
+        }
+
+        /* Buttons & Links */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            width: 100%;
+            padding: 1rem;
+            background-color: var(--text-color);
+            color: #fff;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .btn:hover { background-color: #000; }
+        .btn-accent {
+            background-color: var(--accent-color);
+            box-shadow: 0 4px 15px rgba(0, 70, 255, 0.2);
+        }
+        .btn-accent:hover { background-color: #0035cc; }
+        .link-accent {
+            color: var(--accent-color);
+            text-decoration: none;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            border-bottom: 1px solid var(--accent-color);
+            padding-bottom: 2px;
+        }
+
+        /* Icons */
+        .icon {
+            width: 24px;
+            height: 24px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 1.5;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            margin-bottom: 1rem;
+            color: var(--accent-color);
+        }
+
+        /* 5. Gallery */
+        .gallery-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 10px;
+            gap: 0.75rem;
+            padding: 0 1.5rem;
+            margin-bottom: 2rem;
         }
-
-        .galeria img { width: 100%; height: 150px; object-fit: cover; background: #eee; }
-
-        #countdown { font-size: 1.5rem; font-weight: bold; color: var(--azul-electrico); }
-
-        input, select, textarea {
+        .gallery-item {
+            aspect-ratio: 1;
+            background: #fff;
+            padding: 0.25rem;
+            box-shadow: 2px 2px 8px rgba(0,0,0,0.05);
+        }
+        .gallery-item img {
             width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            border: 1px solid var(--gris-pliegue);
-            box-sizing: border-box;
+            height: 100%;
+            object-fit: cover;
         }
+
+        /* Forms */
+        .form-group {
+            margin-bottom: 1.5rem;
+            text-align: left;
+        }
+        .form-label {
+            display: block;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-light);
+            margin-bottom: 0.5rem;
+        }
+        .form-control {
+            width: 100%;
+            padding: 0.75rem 0;
+            border: none;
+            border-bottom: 1px solid #ddd;
+            background: transparent;
+            font-family: var(--font-main);
+            font-size: 0.9rem;
+            color: var(--text-color);
+            transition: border-color 0.3s;
+        }
+        .form-control:focus {
+            outline: none;
+            border-bottom-color: var(--accent-color);
+        }
+        .radio-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+        .radio-label {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            cursor: pointer;
+        }
+        .radio-label input[type="radio"] {
+            accent-color: var(--accent-color);
+            width: 16px;
+            height: 16px;
+        }
+
+        /* Logistics Box */
+        .logistics-box {
+            background: rgba(0, 70, 255, 0.03);
+            border: 1px solid rgba(0, 70, 255, 0.1);
+            padding: 1rem;
+            text-align: left;
+            font-size: 0.85rem;
+            margin-top: 1rem;
+        }
+        .logistics-box strong { font-weight: 500; }
+        .logistics-box span { color: var(--text-light); font-family: monospace; font-size: 0.8rem; }
     </style>
 </head>
 <body>
 
-    <div class="foto-principal"></div>
-    <h1>Nuestra Boda</h1>
-    <p>14 de Noviembre de 2026</p>
+    <div class="app-container">
+        
+        <!-- 1. PORTADA -->
+        <header class="hero fade-in">
+            <img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?q=80&w=800&auto=format&fit=crop" alt="Novios" crossorigin="anonymous">
+            <div class="hero-overlay">
+                <h1 class="hero-title">A & B</h1>
+                <p class="hero-date">14 . 11 . 2026</p>
+            </div>
+        </header>
 
-    <div class="seccion">
-        <h3>Faltan:</h3>
-        <div id="countdown">Cargando...</div>
-    </div>
+        <!-- 2. CUENTA REGRESIVA -->
+        <section class="origami-card fade-in text-center">
+            <div class="origami-fold"></div>
+            <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+            <h2 class="form-label mb-3">Faltan</h2>
+            <div class="countdown-grid" id="countdown">
+                <div class="countdown-item"><span class="countdown-value" id="cd-days">00</span><span class="countdown-label">Días</span></div>
+                <div class="countdown-item"><span class="countdown-value" id="cd-hours">00</span><span class="countdown-label">Hs</span></div>
+                <div class="countdown-item"><span class="countdown-value" id="cd-mins">00</span><span class="countdown-label">Min</span></div>
+                <div class="countdown-item"><span class="countdown-value" id="cd-secs">00</span><span class="countdown-label">Seg</span></div>
+            </div>
+        </section>
 
-    <div class="seccion">
-        <h2>⛪ Ceremonia y Fiesta</h2>
-        <p>Acompañanos en este día tan especial.</p>
-        <a href="https://maps.google.com" class="btn">📍 Ver en Google Maps</a>
-        <br><br>
-        <a href="#" id="btnCalendar" class="btn" style="background:#333;">📅 Agendar Fecha</a>
-    </div>
+        <!-- 3. UBICACIONES -->
+        <section class="fade-in">
+            <h2 class="text-center mb-3" style="font-size: 1.5rem;">Ubicaciones</h2>
+            
+            <div class="origami-card text-center">
+                <div class="origami-fold"></div>
+                <svg class="icon" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                <h3 class="mb-1" style="font-size: 1.2rem; font-weight: 400;">Ceremonia</h3>
+                <p class="mb-3" style="font-size: 0.85rem; color: var(--text-light);">Parroquia San José<br>Av. Siempre Viva 123, Ciudad</p>
+                <a href="https://maps.google.com" target="_blank" class="link-accent">Ver en mapa</a>
+            </div>
 
-    <div class="seccion">
-        <h2>Nuestra Historia</h2>
-        <div class="galeria">
-            <img src="FOTO1" alt="Boda 1">
-            <img src="FOTO2" alt="Boda 2">
-            <img src="FOTO3" alt="Boda 3">
-            <img src="FOTO4" alt="Boda 4">
+            <div class="origami-card text-center">
+                <div class="origami-fold"></div>
+                <svg class="icon" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                <h3 class="mb-1" style="font-size: 1.2rem; font-weight: 400;">Fiesta</h3>
+                <p class="mb-3" style="font-size: 0.85rem; color: var(--text-light);">Estancia El Paraíso<br>Ruta 4 Km 12, Afueras</p>
+                <a href="https://maps.google.com" target="_blank" class="link-accent">Ver en mapa</a>
+            </div>
+        </section>
+
+        <!-- 4. AGENDAR FECHA -->
+        <section class="origami-card fade-in text-center">
+            <div class="origami-fold"></div>
+            <svg class="icon" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+            <h3 class="mb-3" style="font-size: 1.2rem; font-weight: 400;">Reserva la fecha</h3>
+            <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Boda+A+%26+B&dates=20261114T200000Z/20261115T040000Z&details=¡Nos+casamos!&location=Estancia+El+Paraíso" target="_blank" class="btn">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                Agendar en Google Calendar
+            </a>
+        </section>
+
+        <!-- 5. GALERÍA -->
+        <section class="fade-in">
+            <div class="text-center mb-3">
+                <svg class="icon" style="margin-bottom:0.5rem;" viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
+                <h2 style="font-size: 1.5rem;">Nosotros</h2>
+            </div>
+            <div class="gallery-grid">
+                <div class="gallery-item"><img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?q=80&w=400&auto=format&fit=crop" alt="Foto 1" crossorigin="anonymous"></div>
+                <div class="gallery-item"><img src="https://images.unsplash.com/photo-1520854221256-17451cc331bf?q=80&w=400&auto=format&fit=crop" alt="Foto 2" crossorigin="anonymous"></div>
+                <div class="gallery-item"><img src="https://images.unsplash.com/photo-1583939003579-730e3918a45a?q=80&w=400&auto=format&fit=crop" alt="Foto 3" crossorigin="anonymous"></div>
+                <div class="gallery-item"><img src="https://images.unsplash.com/photo-1606800052052-a08af7148866?q=80&w=400&auto=format&fit=crop" alt="Foto 4" crossorigin="anonymous"></div>
+            </div>
+        </section>
+
+        <!-- 6. LOGÍSTICA -->
+        <section class="origami-card fade-in text-center">
+            <div class="origami-fold"></div>
+            <svg class="icon" viewBox="0 0 24 24"><polyline points="20 12 20 22 4 22 4 12"></polyline><rect x="2" y="7" width="20" height="5"></rect><line x1="12" y1="22" x2="12" y2="7"></line><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"></path><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"></path></svg>
+            <h3 class="mb-1" style="font-size: 1.2rem; font-weight: 400;">Mesa de Regalos</h3>
+            <p class="form-label mb-2">Valor de Tarjeta</p>
+            <p class="text-accent mb-3" style="font-size: 2.5rem; font-weight: 300; line-height: 1;">$50.000</p>
+            <p style="font-size: 0.85rem; color: var(--text-light); line-height: 1.6;">El mejor regalo es tu presencia, pero si deseas ayudarnos con nuestra luna de miel, puedes hacerlo aquí:</p>
+            
+            <div class="logistics-box">
+                <p class="mb-1"><strong>CBU:</strong> <span>0000000000000000000000</span></p>
+                <p><strong>Alias:</strong> <span>BODA.AMOR.VIAJE</span></p>
+            </div>
+        </section>
+
+        <!-- 7. RSVP (WhatsApp) -->
+        <section class="origami-card fade-in text-center">
+            <div class="origami-fold"></div>
+            <h2 class="mb-4" style="font-size: 1.8rem;">RSVP</h2>
+            
+            <form id="rsvpForm">
+                <div class="form-group">
+                    <label class="form-label" for="name">Nombre Completo</label>
+                    <input type="text" id="name" class="form-control" placeholder="Ej. Juan Pérez" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">¿Asistirás?</label>
+                    <div class="radio-group">
+                        <label class="radio-label">
+                            <input type="radio" name="attendance" value="yes" required> Sí, confirmo asistencia
+                        </label>
+                        <label class="radio-label">
+                            <input type="radio" name="attendance" value="no" required> No podré asistir
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-group mb-4">
+                    <label class="form-label" for="diet">Restricción Alimentaria</label>
+                    <select id="diet" class="form-control" required>
+                        <option value="Ninguna">Ninguna</option>
+                        <option value="Celiaquía">Celiaquía</option>
+                        <option value="Vegetariana">Vegetariana</option>
+                        <option value="Vegana">Vegana</option>
+                        <option value="Otra">Otra</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="btn btn-accent">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+                    Confirmar por WhatsApp
+                </button>
+            </form>
+        </section>
+
+        <div class="text-center fade-in" style="padding-bottom: 2rem;">
+            <svg class="icon" style="color: #ccc; margin-bottom: 0.5rem;" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+            <p class="form-label">¡Te esperamos!</p>
         </div>
-    </div>
 
-    <div class="seccion">
-        <h2>🎁 Regalo y Tarjeta</h2>
-        <p>Valor de la tarjeta: $XXXXX</p>
-        <p>Si deseas hacernos un regalo:</p>
-        <strong>ALIAS: Boda.Flujera.2026</strong>
-    </div>
-
-    <div class="seccion">
-        <h2>Confirmación</h2>
-        <form id="rsvpForm">
-            <input type="text" id="nombre" placeholder="Tu nombre completo" required>
-            <select id="restriccion">
-                <option value="Sin restricciones">Sin restricciones alimentarias</option>
-                <option value="Celiaquía">Celiaquía</option>
-                <option value="Vegetariana">Vegetariana</option>
-                <option value="Vegana">Vegana</option>
-                <option value="Otra">Otra (especificar)</option>
-            </select>
-            <textarea id="detalle" placeholder="Escribe aquí si tienes otra restricción o detalle..."></textarea>
-            <button type="button" onclick="enviarWhatsapp()" class="btn">Confirmar por WhatsApp</button>
-        </form>
     </div>
 
     <script>
-        // Lógica del Countdown
-        const targetDate = new Date("Nov 14, 2026 18:00:00").getTime();
-        setInterval(() => {
+        // --- 1. COUNTDOWN LOGIC ---
+        const targetDate = new Date("2026-11-14T00:00:00").getTime();
+        
+        function updateCountdown() {
             const now = new Date().getTime();
-            const diff = targetDate - now;
-            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            document.getElementById("countdown").innerHTML = `${days}d ${hours}h`;
-        }, 1000);
+            const difference = targetDate - now;
 
-        // Envío a WhatsApp [cite: 31, 45]
-        function enviarWhatsapp() {
-            const nombre = document.getElementById('nombre').value;
-            const restriccion = document.getElementById('restriccion').value;
-            const detalle = document.getElementById('detalle').value;
-            const telefono = "54911XXXXXXXX"; // Reemplazar con tu número
-            
-            const mensaje = `¡Hola! Confirmo mi asistencia a la boda. %0A*Nombre:* ${nombre}%0A*Restricción:* ${restriccion}%0A*Detalle:* ${detalle}`;
-            window.open(`https://wa.me/${telefono}?text=${mensaje}`);
+            if (difference > 0) {
+                const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+
+                document.getElementById("cd-days").innerText = days.toString().padStart(2, '0');
+                document.getElementById("cd-hours").innerText = hours.toString().padStart(2, '0');
+                document.getElementById("cd-mins").innerText = minutes.toString().padStart(2, '0');
+                document.getElementById("cd-secs").innerText = seconds.toString().padStart(2, '0');
+            }
         }
+        
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+
+        // --- 2. SCROLL ANIMATIONS (FADE-IN) ---
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.15
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target); // Only animate once
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+
+        // --- 3. RSVP WHATSAPP LOGIC ---
+        document.getElementById('rsvpForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('name').value;
+            const attendance = document.querySelector('input[name="attendance"]:checked').value;
+            const diet = document.getElementById('diet').value;
+            
+            // Reemplazar con el número de teléfono real (código de país + número, sin + ni espacios)
+            const phone = "5491100000000"; 
+            
+            let message = `¡Hola! Soy ${name}. `;
+            if (attendance === 'yes') {
+                message += `Confirmo mi asistencia a la boda 🎉. `;
+            } else {
+                message += `Lamentablemente no podré asistir 😔. `;
+            }
+            message += `Restricción alimentaria: ${diet}.`;
+
+            const whatsappUrl = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+            window.open(whatsappUrl, '_blank');
+        });
     </script>
 </body>
 </html>
